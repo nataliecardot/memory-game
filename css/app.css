@@ -1,3 +1,7 @@
+/* TODO: allow for clicking outside modal to close */
+/* TODO: stars/moves/counter float left, reset float right, reset green */
+
+
 html {
 	box-sizing: border-box;
 }
@@ -17,7 +21,7 @@ body {
 }
 
 body {
-  background: #ffffff url(../img/geometry2.png);
+  background: #fff url(../img/geometry2.png);
 	font-family: 'Coda', cursive;
 	font-size: 16px;
 }
@@ -29,47 +33,46 @@ body {
 	flex-direction: column;
 }
 
-h1 {
-	font-family: 'Coda', cursive;
-}
-
 /* DECK OF CARDS */
 
 .card-deck {
-	width: 85%;
 	background: #a6a2a2;
 	padding: 1rem;
 	border-radius: 4px;
 	box-shadow: 8px 9px 26px 0 rgba(46, 61, 73, 0.5);
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+  /* Horizontal alignment (flex-direction: row is default with display: flex). Distributes items evenly but with twice as much space on the sides as between inner items */
+	justify-content: space-evenly;
+  /* Vertical alignment */
 	align-items: center;
+  /* Top, right/left, bottom */
 	margin: 0 0 3em;
 }
 
 .card-deck .card {
-	height: 3.7rem;
-	width: 3.7rem;
-	margin: 0.2rem 0.2rem;
 	background: #d6d6d6;
 	font-size: 0;
-	color: #ffffff;
-	border-radius: 5px;
+	color: #fff;
+	border-radius: 4px;
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 	cursor: pointer;
+  /* Control placement of Font Awesome icons on card */
 	display: flex;
+  /* Horizontal alignment (flex-direction: row is default with display: flex) */
 	justify-content: center;
+  /* Vertical alignment */
 	align-items: center;
-	box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
+/* TODO: Why is this color different than that of .matching */
 .card-deck .card.open {
-	background: #02b3e4;
+	background: #20bdf7;
 	cursor: default;
 	animation-name: flipInY;
 	-webkit-backface-visibility: visible !important;
 	backface-visibility: visible !important;
-	animation-duration: .75s;
+	animation-duration: 0.5s;
 }
 
 .card-deck .card.show {
@@ -83,6 +86,7 @@ h1 {
 }
 
 .card-deck .card.matching {
+  /* Changes cursor back to normal to indicate nothing will happen if you click a card */
 	cursor: default;
 	background: #20bdf7;
   /* Makes Font Awesome icons appear on card */
@@ -107,22 +111,24 @@ h1 {
 
 .score-panel {
 	text-align: left;
-	margin-bottom: 10px;
+  margin: 0.4em 0 0.4em;
 }
 
 .score-panel .stars {
-	margin: 0;
 	padding: 0;
+  /* Displays next to text instead of (horizontally) on line above it */
 	display: inline-block;
 	margin: 0 5px 0 0;
 }
 
 .score-panel .stars li {
 	list-style: none;
+  /* Displays horizontally instead of vertically */
 	display: inline-block;
 }
 
 .score-panel .restart {
+  /* Remove? Centered so barely makes a difference */
 	float: right;
 	cursor: pointer;
 }
@@ -132,46 +138,48 @@ h1 {
 }
 
 .timer {
-	display: inline-block;
-	margin: 0 1rem;
+  /* TODO: remove if can change to span */
+	/* display: inline-block; */
+	margin: 0 0.5em;
 }
 
 /* CONGRATULATIONS MODAL */
 
-.overlay {
+.modal {
 	position: fixed;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: rgba(0, 0, 0, 0.7);
+	background: rgba(0, 0, 0, 0.62);
 	transition: opacity 500ms;
 	visibility: hidden;
 	opacity: 0;
 }
 
-.overlay:target {
+.modal:target {
 	visibility: visible;
 	opacity: 1;
 }
 
-.popup {
+.modal-content {
 	margin: 70px auto;
 	padding: 20px;
-	background: #ffffff;
+	background: #fff;
 	border-radius: 5px;
 	width: 85%;
 	position: relative;
 	transition: all 5s ease-in-out;
 }
 
-.popup h2 {
+.modal-content h2 {
+  text-align: center;
 	margin-top: 0;
 	color: #333;
-	font-family: Tahoma, Arial, sans-serif;
 }
 
-.popup .close {
+/* TODO: "x" button overlaps with "Congratulations" on some phones; fix */
+.modal-content .close {
 	position: absolute;
 	top: 20px;
 	right: 30px;
@@ -182,21 +190,25 @@ h1 {
 	color: #333;
 }
 
-.popup .close:hover {
-	color: #e5f720;
+/* Changes color when hovering over "x" button on modal */
+.modal-content .close:hover {
+	color: #20bdf7;
 }
 
-.popup .congrats-message,
+.modal-content .congrats-message,
 .info-message {
 	max-height: 30%;
 	overflow: auto;
 	text-align: center;
 }
 
+/* Displays stars on the same line, removes bullet points */
 .star-rating li {
 	display: inline-block;
+  list-style: none;
 }
 
+/* TODO: decrease button width */
 .play-again {
 	background-color: #141214;
 	padding: 0.7rem 1rem;
@@ -204,7 +216,7 @@ h1 {
 	display: block;
 	margin: 0 auto;
 	width: 50%;
-	color: #ffffff;
+	color: #fff;
 	border-radius: 5px;
 }
 
@@ -283,7 +295,8 @@ h1 {
 
 /* MEDIA QUERIES */
 
-@media (max-width: 320px) {
+/* Extra small devices (portrait phones) and small devices (landscape phones) */
+@media (min-width: 320px) {
 	.card-deck {
 		width: 85%;
 	}
@@ -296,22 +309,23 @@ h1 {
 
 /* For tablets and larger screens */
 
+/* TODO: separate styling for medium and large screens? How does it compare to default, and let something use default? */
 @media (min-width: 768px) {
 	.container {
-		font-size: 22px;
+		font-size: 20px;
 	}
 
 	.card-deck {
-		width: 660px;
-		height: 680px;
+		width: 570px;
+		height: 580px;
 	}
 
 	.card-deck .card {
-		height: 125px;
-		width: 125px;
+		height: 120px;
+		width: 120px;
 	}
 
-	.popup {
+	.modal-content {
 		width: 60%;
 	}
 }

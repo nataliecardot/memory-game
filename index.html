@@ -11,9 +11,6 @@
 <body>
 
   <div class="container">
-    <header>
-      <h1>Matching Game</h1>
-    </header>
 
     <section class="score-panel">
       <ul class="stars">
@@ -23,7 +20,9 @@
       </ul>
 
       <span class="moves">0</span> moves
-      <div class="timer"></div>
+      <!-- TODO: if these following two divs are changed to spans, card-deck is left aligned. Why? -->
+      <span class="timer"></span>
+      <!-- TODO: figure out why changing this div to span makes card-deck be aligned left -->
       <div class="restart" onclick=startGame()>
         <i class="fa fa-repeat"></i>
       </div>
@@ -80,17 +79,16 @@
       </li>
     </ul>
 
-    <div class="main-modal overlay">
-      <div class="popup">
+    <div class="modal">
+      <div class="modal-content">
         <h2>Congratulations!</h2>
-        <a class="close" href=# >×</a>
+        <a class="close" href="#">×</a>
         <div class="congrats-message">
           You're a winner!
         </div>
         <div class="info-message">
-          <p>You made <span class=final-move></span>moves</p>
-          <p>In: <span class=total-time></span></p>
-          <p>Rating: <span class=star-rating></span></p>
+          <p>You made <span class="final-moves"></span> moves in <span class="total-time"></span></p>
+          <p>Rating: <span class="star-rating"></span></p>
         </div>
         <button class="play-again" onclick="reset()">
           Play again

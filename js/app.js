@@ -7,11 +7,12 @@ console.log(cards);
 let deck = document.getElementsByClassName('card-deck')[0];
 let moves = 0;
 let counter = document.querySelector('.moves');
-let stars = document.querySelectorAll('.fa-star');
+const stars = document.querySelectorAll('.fa-star');
 let matchingCard = document.getElementsByClassName('matching');
 let starsList = document.querySelectorAll('.stars li');
 let closeIcon = document.querySelector('.close');
-let modal = document.getElementsByClassName('main-modal');
+// TODO: Find out why this is needed in vanilla JS. If there's only one class with this name, why do I need to select the first one?
+let modal = document.getElementsByClassName('modal')[0];
 let openedCards = [];
 let second = 0, minute = 0, hour = 0;
 let timer = document.querySelector('.timer');
@@ -127,7 +128,8 @@ function enable() {
 function moveCounter() {
   moves++;
   counter.innerHTML = moves;
-  // Starts timer on first click
+  // Starts timer after first move
+  // TODO: timer only starts after clicing second card; start after clicking first one
   if (moves == 1) {
     second = 0;
     minute = 0;
@@ -154,7 +156,7 @@ function moveCounter() {
 // Game timer
 function startTimer() {
   interval = setInterval(function() {
-    timer.innerHTML = minute + 'mins ' + second + 'secs';
+    timer.innerHTML = minute + ' mins ' + second + ' secs';
     second++;
     if (second == 60) {
       minute++;
@@ -167,9 +169,10 @@ function startTimer() {
   }, 1000);
 }
 
-// Congratulates player when all cards match and shows modal, moves, time and rating
+// Congratulates player when all cards match and shows modal, moves, time and rating TODO: change length back to 2!
+
 function congratulations() {
-  if (matchingCard.length == 16) {
+  if (matchingCard.length == 2) {
     clearInterval(interval);
     let finalTime = timer.innerHTML;
 
@@ -178,10 +181,11 @@ function congratulations() {
 
     let starRating = document.querySelector('.stars').innerHTML;
 
-    // Shows move, time, and rating on modal
-    document.getElementsByClassName('final-move').innerHTML = moves;
-    document.getElementsByClassName('star-rating').innerHTML = starRating;
-    document.getElementsByClassName('total-time').innerHTML = finalTime;
+    // Shows number of moves made, time, and rating on modal
+    // TODO: these were ids before
+    document.getElementsByClassName('final-moves')[0].innerHTML = moves;
+    document.getElementsByClassName('star-rating')[0].innerHTML = starRating;
+    document.getElementsByClassName('total-time')[0].innerHTML = finalTime;
 
     // Adds event listener for modal's close button
     closeModal();
