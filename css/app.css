@@ -317,17 +317,30 @@ h2 {
 
 /* Extra small devices (portrait phones) and small devices (landscape phones) */
 @media (min-width: 320px) {
+  /* Enables scrolling on mobile */
+  body {
+    overflow: visible;
+  }
+
+  h2 {
+    /* Increase h2 top margin, add bottom margin (compared to amount set above) (browser default is 0.83em) */
+    margin: 0.5em 0 0.3em 0;
+  }
+
   /* Set to same width as card-deck to allow items to be aligned to the left/right relative to it */
   .score-panel {
-    width: 85%;
+    width: 93%;
   }
+
 	.card-deck {
-		width: 85%;
+		width: 93%;
 	}
 
 	.card-deck .card {
-		height: 4.7rem;
-		width: 4.7rem;
+		height: 70px;
+		width: 70px;
+    /* Adds a little space between cards to prevent them from touching sides */
+    margin: 4px;
 	}
 }
 
