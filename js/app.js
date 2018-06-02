@@ -94,7 +94,7 @@ function matching() {
   openedCards = [];
 }
 
-// When cards don't match, adds class "not-matching" to both and calls disable() function (to disable flipping of other cards). After 1 second removes "not-matching" class, calls enable() function (to make flipping cards possible again), and clears the two cards' arrays
+// When cards don't match, adds class "not-matching" to both and calls disable() function (to disable flipping of other cards). After half a second, removes "not-matching" class, calls enable() function (to make flipping cards possible again), and clears the two cards' arrays
 function notMatching() {
   openedCards[0].classList.add('not-matching');
   openedCards[1].classList.add('not-matching');
@@ -104,7 +104,7 @@ function notMatching() {
     openedCards[1].classList.remove('show', 'open', 'not-matching');
     enable();
     openedCards = [];
-  }, 1000);
+  }, 500);
 }
 
 // Disables all cards temporarily (while two cards are flipped)
@@ -126,28 +126,29 @@ function enable() {
 
 // Counts player's moves
 function moveCounter() {
+  // Increases "moves" by one
   moves++;
   counter.innerHTML = moves;
-  // Starts timer after first move
-  // TODO: timer only starts after clicing second card; start after clicking first one
+  // Starts timer after first move (meaning two cards have been flipped)
+  // TODO: timer only starts after clicking second card; start after clicking first one
   if (moves == 1) {
     second = 0;
     minute = 0;
     hour = 0;
     startTimer();
   }
-  // Sets star rating based on number of moves
+  // Sets star rating based on number of moves. (Note: using display: none for removed stars instead of visibility: collapse, because with visibility: collapse, row is centered as if stars are still present)
   if (moves > 8 && moves < 12) {
     for (i = 0; i < 3; i++) {
       if (i > 1) {
-        stars[i].style.visibility = 'collapse';
+        stars[i].style.display = 'none';
       }
     }
   }
   else if (moves > 13) {
     for (i = 0; i < 3; i++) {
       if (i > 0) {
-        stars[i].style.visibility = 'collapse';
+        stars[i].style.display = 'none';
       }
     }
   }
@@ -169,10 +170,10 @@ function startTimer() {
   }, 1000);
 }
 
-// Congratulates player when all cards match and shows modal, moves, time and rating TODO: change length back to 2!
+// Congratulates player when all cards match and shows modal, moves, time and rating
 
 function congratulations() {
-  if (matchingCard.length == 2) {
+  if (matchingCard.length == 16) {
     clearInterval(interval);
     let finalTime = timer.innerHTML;
 
@@ -182,7 +183,6 @@ function congratulations() {
     let starRating = document.querySelector('.stars').innerHTML;
 
     // Shows number of moves made, time, and rating on modal
-    // TODO: these were ids before
     document.getElementsByClassName('final-moves')[0].innerHTML = moves;
     document.getElementsByClassName('star-rating')[0].innerHTML = starRating;
     document.getElementsByClassName('total-time')[0].innerHTML = finalTime;

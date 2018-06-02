@@ -1,8 +1,5 @@
-/* TODO: allow for clicking outside modal to close */
-/* TODO: stars/moves/counter float left, reset float right, reset green */
-
-
 html {
+  /* Includes padding and border in elements' total width https://ibb.co/jBj9xdand height */
 	box-sizing: border-box;
 }
 
@@ -18,26 +15,46 @@ body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+  /* Removes scroll bar, prevents page scrolling TODO: ensure compatible with other screen sizes */
+  overflow: hidden;
 }
 
 body {
+  /* Background (Geometry 2) from Subtle Patterns */
   background: #fff url(../img/geometry2.png);
-	font-family: 'Coda', cursive;
+  /* For CodePen */
+  /* background: url("https://image.ibb.co/i3hjVy/geometry2.png"); */
+	font-family: 'Coda', sans-serif;
 	font-size: 16px;
 }
 
 .container {
 	display: flex;
+  flex-direction: column;
+  /* Vertically aligns content (under default conditions, flex-direction is row and this would control horizontal alignment [still controls main axis alignment, but main axis is changed]) */
 	justify-content: center;
+  /* Horizontally aligns content (under default conditions would control vertical alignment [still controls cross axis alignment, but cross axis is changed]) */
 	align-items: center;
-	flex-direction: column;
+}
+
+h2 {
+  /* Reduce h2 top margin, remove default bottom margin (browser default is 0.83em) */
+  margin: 0.3em 0 0 0;
+}
+
+.left-span {
+  float: left;
+}
+
+.right-span {
+  float: right;
 }
 
 /* DECK OF CARDS */
 
 .card-deck {
 	background: #a6a2a2;
-	padding: 1rem;
+	padding: 0.6rem;
 	border-radius: 4px;
 	box-shadow: 8px 9px 26px 0 rgba(46, 61, 73, 0.5);
 	display: flex;
@@ -65,13 +82,10 @@ body {
 	align-items: center;
 }
 
-/* TODO: Why is this color different than that of .matching */
 .card-deck .card.open {
-	background: #20bdf7;
+	background: #1db9f2;
 	cursor: default;
 	animation-name: flipInY;
-	-webkit-backface-visibility: visible !important;
-	backface-visibility: visible !important;
 	animation-duration: 0.5s;
 }
 
@@ -81,27 +95,32 @@ body {
 }
 
 .show {
+  /* Without these two (with !important), modal doesn't appear when game is won */
 	visibility: visible !important;
 	opacity: 100 !important;
 }
 
+/* Styles matching cards. Not sure why, but .card-deck needed */
 .card-deck .card.matching {
   /* Changes cursor back to normal to indicate nothing will happen if you click a card */
 	cursor: default;
-	background: #20bdf7;
+	background: #1db9f2;
   /* Makes Font Awesome icons appear on card */
 	font-size: 33px;
 	animation-name: rubberBand;
-	-webkit-backface-visibility: visible !important;
-	backface-visibility: visible !important;
-	animation-duration: 0.75s;
+  backface-visibility: visible;
+	-webkit-backface-visibility: visible;
+	animation-duration: 0.5s;
 }
 
+/* Styles cards that don't match. Not sure why, but .card-deck needed */
 .card-deck .card.not-matching {
 	animation-name: pulse;
+  animation-duration: 0.5s;
 	background: #cf205d;
 }
 
+/* Affects whole deck. Class "disabled" is add Not sure why, but .card-deck needed */
 .card-deck .card.disabled {
 	pointer-events: none;
 	opacity: 0.9;
@@ -114,32 +133,26 @@ body {
   margin: 0.4em 0 0.4em;
 }
 
-.score-panel .stars {
+.stars {
 	padding: 0;
-  /* Displays next to text instead of (horizontally) on line above it */
+  /* Displays next to text instead of (horizontally) on line above it. Even though .stars ul is inside span class, ul is a block element */
 	display: inline-block;
 	margin: 0 5px 0 0;
 }
 
-.score-panel .stars li {
+.stars li {
 	list-style: none;
   /* Displays horizontally instead of vertically */
 	display: inline-block;
 }
 
-.score-panel .restart {
-  /* Remove? Centered so barely makes a difference */
-	float: right;
+/* Game restart button */
+.restart {
 	cursor: pointer;
-}
-
-.fa-star {
-	color: #ffd700;
+  color: #2eb82e;
 }
 
 .timer {
-  /* TODO: remove if can change to span */
-	/* display: inline-block; */
 	margin: 0 0.5em;
 }
 
@@ -153,46 +166,45 @@ body {
 	right: 0;
 	background: rgba(0, 0, 0, 0.62);
 	transition: opacity 500ms;
+  /* Hides modal */
 	visibility: hidden;
+  /* Solves a bug that causes stars to stay on screen after closing modal */
 	opacity: 0;
-}
-
-.modal:target {
-	visibility: visible;
-	opacity: 1;
 }
 
 .modal-content {
 	margin: 70px auto;
 	padding: 20px;
 	background: #fff;
+  text-align: center;
 	border-radius: 5px;
 	width: 85%;
 	position: relative;
-	transition: all 5s ease-in-out;
+  /* Without this, stars from modal linger on the screen slightly longer than the rest of modal */
+	transition: all 2s ease-in-out;
 }
 
 .modal-content h2 {
-  text-align: center;
 	margin-top: 0;
 	color: #333;
 }
 
 /* TODO: "x" button overlaps with "Congratulations" on some phones; fix */
-.modal-content .close {
+/* Affects "x" button on modal */
+.close {
 	position: absolute;
 	top: 20px;
 	right: 30px;
-	transition: all 200ms;
 	font-size: 30px;
 	font-weight: bold;
+  /* Removes default (link) underline */
 	text-decoration: none;
 	color: #333;
 }
 
 /* Changes color when hovering over "x" button on modal */
-.modal-content .close:hover {
-	color: #20bdf7;
+.close:hover {
+	color: #1db9f2;
 }
 
 .modal-content .congrats-message,
@@ -202,20 +214,28 @@ body {
 	text-align: center;
 }
 
+.congrats-message {
+  margin-top: 0.9em;
+}
+
 /* Displays stars on the same line, removes bullet points */
 .star-rating li {
 	display: inline-block;
   list-style: none;
 }
 
-/* TODO: decrease button width */
+/* Affects button inside modal that resets game on click */
 .play-again {
-	background-color: #141214;
+  cursor: pointer;
+	background-color: #1db9f2;
+  /* Removes default border that looks like shadow */
+  border: none;
 	padding: 0.7rem 1rem;
 	font-size: 1.1rem;
+  /* Button elements are inline-block by default */
 	display: block;
 	margin: 0 auto;
-	width: 50%;
+	width: 40%;
 	color: #fff;
 	border-radius: 5px;
 }
@@ -297,6 +317,10 @@ body {
 
 /* Extra small devices (portrait phones) and small devices (landscape phones) */
 @media (min-width: 320px) {
+  /* Set to same width as card-deck to allow items to be aligned to the left/right relative to it */
+  .score-panel {
+    width: 85%;
+  }
 	.card-deck {
 		width: 85%;
 	}
@@ -312,20 +336,25 @@ body {
 /* TODO: separate styling for medium and large screens? How does it compare to default, and let something use default? */
 @media (min-width: 768px) {
 	.container {
-		font-size: 20px;
+		font-size: 18px;
 	}
 
+  /* Set to same width as card-deck to allow items to be aligned to the left/right relative to it */
+  .score-panel {
+    width: 550px;
+  }
+
 	.card-deck {
-		width: 570px;
-		height: 580px;
+		width: 550px;
+		height: 530px;
 	}
 
 	.card-deck .card {
-		height: 120px;
-		width: 120px;
+		height: 110px;
+		width: 110px;
 	}
 
 	.modal-content {
-		width: 60%;
+		width: 45%;
 	}
 }

@@ -12,30 +12,33 @@
 
   <div class="container">
 
+    <h2>Matching Game</h2>
     <section class="score-panel">
-      <ul class="stars">
-        <li><i class="fa fa-star"></i></li>
-        <li><i class="fa fa-star"></i></li>
-        <li><i class="fa fa-star"></i></li>
-      </ul>
+      <span class="left-span">
+        <ul class="stars">
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
+        </ul>
 
-      <span class="moves">0</span> moves
-      <!-- TODO: if these following two divs are changed to spans, card-deck is left aligned. Why? -->
-      <span class="timer"></span>
-      <!-- TODO: figure out why changing this div to span makes card-deck be aligned left -->
-      <div class="restart" onclick=startGame()>
-        <i class="fa fa-repeat"></i>
-      </div>
+        <span class="moves">0</span> moves
+        <span class="timer"></span>
+      </span>
+      <span class="right-span">
+        <span class="restart" onclick=startGame()>
+          <i class="fa fa-repeat"></i>
+        </span>
+      </span>
     </section>
 
     <ul class="card-deck">
-      <li class="card" type="diamond">
+      <li class="card " type="diamond">
         <i class="fa fa-diamond"></i>
       </li>
       <li class="card" type="plane">
         <i class="fa fa-paper-plane-o"></i>
       </li>
-      <li class="card matching" type="anchor">
+      <li class="card" type="anchor">
         <i class="fa fa-anchor"></i>
       </li>
       <li class="card" type="bolt" >
@@ -44,7 +47,7 @@
       <li class="card" type="cube">
         <i class="fa fa-cube"></i>
       </li>
-      <li class="card matching" type="anchor">
+      <li class="card" type="anchor">
         <i class="fa fa-anchor"></i>
       </li>
       <li class="card" type="leaf">
@@ -65,7 +68,7 @@
       <li class="card" type="bomb">
         <i class="fa fa-bomb"></i>
       </li>
-      <li class="card open show" type="bolt">
+      <li class="card" type="bolt">
         <i class="fa fa-bolt"></i>
       </li>
       <li class="card" type="bicycle">
@@ -81,10 +84,10 @@
 
     <div class="modal">
       <div class="modal-content">
-        <h2>Congratulations!</h2>
+        <h2>VICTORY!</h2>
         <a class="close" href="#">×</a>
         <div class="congrats-message">
-          You're a winner!
+          You rock.
         </div>
         <div class="info-message">
           <p>You made <span class="final-moves"></span> moves in <span class="total-time"></span></p>
