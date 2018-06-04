@@ -6,6 +6,7 @@ console.log(cards);
 // getElementsByClassName method returns HTMLCollection (or a NodeList for some older browsers https://www.w3schools.com/js/js_htmldom_nodelist.asp), an array-like object on which you can use Array.prototype methods. Added [0] to get the first element matched
 let deck = document.getElementsByClassName('card-deck')[0];
 let moves = 0;
+// Class moves controls what's displayed in the score panel
 let counter = document.querySelector('.moves');
 // Const cannot be used here in order for star rating to be reset when startGame() is called
 let stars = document.querySelectorAll('.fa-star');
@@ -48,16 +49,13 @@ modalPlayAgainButton.addEventListener('click', reset);
 function startGame() {
   // Shuffles deck
   cards = shuffle(cards);
-  // Removes any existing classes from each card
+  // Loops through shuffled cards, adds each to the deck (an array-like object, since it is defined with getElementsByClassName), and removes any existing classes from each card
   for (let i = 0; i < cards.length; i++) {
-    deck.innerHTML = '';
-    // Empty array literal is being used as a shortcut to expanded version, Array.prototype. getElementsByClassName method was used to create cards variable. Since getElementsByClassName returns an "array-like" like object rather than an array, Array.prototype/[] is needed it use array methods on element(s) selected with it.
-    [].forEach.call(cards, function(item) {
-      deck.appendChild(item);
-    });
+  cards.forEach(i => deck.appendChild(i));
     // Class 'open' changes the card color and triggers an animation, while 'show' (when applied to a card; in other cases it is applied to the modal) displays the Font Awesome icon
     cards[i].classList.remove('show', 'open', 'matching', 'disabled');
   }
+  openedCards = [];
   // Resets number of moves
   moves = 0;
   counter.innerHTML = moves;
@@ -77,7 +75,7 @@ function startGame() {
   clearInterval(interval);
 }
 
-// When called, function toggles open and show classes to display cards. Class 'open' changes the card color and triggers an animation, while 'show' (when applied to a card; in other cases it is applied to the modal) displays the Font Awesome icon.
+// When called, function toggles open and show classes to display cards. Class 'open' changes the card color and triggers an animation, while 'show' (when applied to a card; in other cases it is applied to the modal) displays the Font Awesome icon
 let displayCard = function() {
   this.classList.toggle('open');
   this.classList.toggle('show');
@@ -88,7 +86,13 @@ let displayCard = function() {
 function cardOpen() {
   openedCards.push(this);
   let len = openedCards.length;
-  if (len === 2) {
+  // Once a card has been opened, starts timer if no moves have been made already (moves is set to one only after two cards have been flipped)
+  if (len == 1 && moves == 0) {
+    second = 0;
+    minute = 0;
+    hour = 0;
+    startTimer();
+  } else if (len === 2) {
     moveCounter();
     if (openedCards[0].type === openedCards[1].type) {
       matching();
@@ -122,9 +126,7 @@ function notMatching() {
 
 // Disables all cards temporarily (while two cards are flipped)
 function disable() {
-  Array.prototype.filter.call(cards, function(card) {
-    card.classList.add('disabled');
-  });
+  cards.forEach(card => card.classList.add('disabled'));
 }
 
 // Enables flipping of cards, disables matching cards
@@ -142,14 +144,6 @@ function moveCounter() {
   // Increases "moves" by one
   moves++;
   counter.innerHTML = moves;
-  // Starts timer after first move (meaning two cards have been flipped)
-  // TODO: timer only starts after clicking second card; start after clicking first one
-  if (moves == 1) {
-    second = 0;
-    minute = 0;
-    hour = 0;
-    startTimer();
-  }
   // Sets star rating based on number of moves. (Note: using display: none for removed stars instead of visibility: collapse, because with visibility: collapse, row is centered as if stars are still present)
   if (moves > 8 && moves < 12) {
     for (i = 0; i < 3; i++) {
@@ -227,5 +221,3 @@ for (let i = 0; i < cards.length; i++) {
   card.addEventListener('click', cardOpen);
   card.addEventListener('click', congratulations);
 }
-
-// TODO: fix bug: if you make one move and hit restart, then click one card, a second card (without an icon on it) is flipped
