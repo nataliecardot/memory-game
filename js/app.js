@@ -19,6 +19,7 @@ let second = 0, minute = 0, hour = 0;
 let timer = document.querySelector('.timer');
 let interval;
 const restartButton = document.querySelector('.restart');
+const modalPlayAgainButton = document.querySelector('.play-again');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -40,6 +41,9 @@ document.body.onload = startGame();
 
 // Calls startGame() function with user clicks restart icon
 restartButton.addEventListener('click', startGame);
+
+// Calls startGame() function with user clicks "play again" button in modal
+modalPlayAgainButton.addEventListener('click', startGame);
 
 function startGame() {
   // Shuffles deck
