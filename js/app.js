@@ -50,6 +50,7 @@ function startGame() {
     [].forEach.call(cards, function(item) {
       deck.appendChild(item);
     });
+    // Class 'open' changes the card color and triggers an animation, while 'show' (when applied to a card; in other cases it is applied to the modal) displays the Font Awesome icon
     cards[i].classList.remove('show', 'open', 'matching', 'disabled');
   }
   // Resets number of moves
@@ -69,7 +70,7 @@ function startGame() {
   clearInterval(interval);
 }
 
-// Toggles open and show classes to display cards
+// When called, function toggles open and show classes to display cards. Class 'open' changes the card color and triggers an animation, while 'show' (when applied to a card; in other cases it is applied to the modal) displays the Font Awesome icon.
 let displayCard = function() {
   this.classList.toggle('open');
   this.classList.toggle('show');
