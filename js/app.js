@@ -69,6 +69,7 @@ function startGame() {
   let hour = 0;
   let timer = document.querySelector('.timer');
   timer.innerHTML = '0 mins 0 secs';
+  // Window method that stops setInterval() Window method from executing "myTimer" function every 1 second
   clearInterval(interval);
 }
 
@@ -182,6 +183,7 @@ function startTimer() {
 
 function congratulations() {
   if (matchingCard.length == 16) {
+    // Window method that stops setInterval() Window method from executing "myTimer" function every 1 second
     clearInterval(interval);
     let finalTime = timer.innerHTML;
 
