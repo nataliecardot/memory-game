@@ -7,7 +7,8 @@ console.log(cards);
 let deck = document.getElementsByClassName('card-deck')[0];
 let moves = 0;
 let counter = document.querySelector('.moves');
-const stars = document.querySelectorAll('.fa-star');
+// Const cannot be used here in order for star rating to be reset when startGame() is called
+let stars = document.querySelectorAll('.fa-star');
 let matchingCard = document.getElementsByClassName('matching');
 let starsList = document.querySelectorAll('.stars li');
 let closeIcon = document.querySelector('.close');
