@@ -42,8 +42,8 @@ document.body.onload = startGame();
 // Calls startGame() function with user clicks restart icon
 restartButton.addEventListener('click', startGame);
 
-// Calls startGame() function with user clicks "play again" button in modal
-modalPlayAgainButton.addEventListener('click', startGame);
+// Calls reset() function (hides modal and restarts game) with user clicks "play again" button in modal
+modalPlayAgainButton.addEventListener('click', reset);
 
 function startGame() {
   // Shuffles deck
@@ -88,7 +88,7 @@ let displayCard = function() {
 function cardOpen() {
   openedCards.push(this);
   let len = openedCards.length;
-  if (len === 2) {
+  if (len === 1) {
     moveCounter();
     if (openedCards[0].type === openedCards[1].type) {
       matching();
@@ -214,6 +214,7 @@ function closeModal() {
   });
 }
 
+// Called when user hits "play again" button
 function reset() {
   modal.classList.remove('show');
   startGame();
