@@ -9,8 +9,8 @@ let moves = 0;
 let counter = document.querySelector('.moves');
 // Const cannot be used here in order for star rating to be reset when startGame() is called
 let stars = document.querySelectorAll('.fa-star');
-let matchingCard = document.getElementsByClassName('matching');
 let starsList = document.querySelectorAll('.stars li');
+let matchingCard = document.getElementsByClassName('matching');
 let closeIcon = document.querySelector('.close');
 // Using getElementsByClassName instead of querySelector here (there's only one class to select) because querySelector is non-live, i.e., it doesn't reflect DOM manipulation. When the user wins the game, a class ("show") is added to the element with class modal, which is set to visible in CSS, so getElementsByClassName is needed (otherwise the modal remains hidden when the game has been won)
 let modal = document.getElementsByClassName('modal')[0];
@@ -60,7 +60,8 @@ function startGame() {
   // Resets star rating
   for (let i = 0; i < stars.length; i++) {
     stars[i].style.color = '#ffd700';
-    stars[i].style.visibility = 'visible';
+    // When function moveCounter() is called, stars is set to display: none after a certain number of moves. (visibility: collapse was original method used to hide stars, but this prevented proper centering of stars in modal)
+    stars[i].style.display = 'inline';
   }
   // Resets timer
   let second = 0;
@@ -131,7 +132,7 @@ function enable() {
   });
 }
 
-// Counts player's moves
+// Updates move counter
 function moveCounter() {
   // Increases "moves" by one
   moves++;
@@ -220,4 +221,4 @@ for (let i = 0; i < cards.length; i++) {
   card.addEventListener('click', congratulations);
 }
 
-// TODO: fix bug: if you make one move and hit restart, then click one card, a second card (without an icon on it) is flipped.
+// TODO: fix bug: if you make one move and hit restart, then click one card, a second card (without an icon on it) is flipped
