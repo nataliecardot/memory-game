@@ -88,7 +88,7 @@ let displayCard = function() {
 function cardOpen() {
   openedCards.push(this);
   let len = openedCards.length;
-  if (len === 1) {
+  if (len === 2) {
     moveCounter();
     if (openedCards[0].type === openedCards[1].type) {
       matching();
