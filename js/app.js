@@ -3,7 +3,7 @@ let card = document.getElementsByClassName('card');
 let cards = [...card];
 console.log(cards);
 
-// getElementsByClassName method returns HTMLCollection (or a NodeList for some older browsers https://www.w3schools.com/js/js_htmldom_nodelist.asp), an array-like object on which you can use Array.prototype methods. Added [0] to get the first element matched. TODO: replace card-deck with card and change "deck" to "card"? Would make more sense?
+// getElementsByClassName method returns HTMLCollection (or a NodeList for some older browsers https://www.w3schools.com/js/js_htmldom_nodelist.asp), an array-like object on which you can use Array.prototype methods. Added [0] to get the first element matched
 let deck = document.getElementsByClassName('card-deck')[0];
 let moves = 0;
 let counter = document.querySelector('.moves');
@@ -11,12 +11,13 @@ const stars = document.querySelectorAll('.fa-star');
 let matchingCard = document.getElementsByClassName('matching');
 let starsList = document.querySelectorAll('.stars li');
 let closeIcon = document.querySelector('.close');
-// TODO: Find out why this is needed in vanilla JS. If there's only one class with this name, why do I need to select the first one?
+// Using getElementsByClassName instead of querySelector here (there's only one class to select) because querySelector is non-live, i.e., it doesn't reflect DOM manipulation. When the user wins the game, a class ("show") is added to the element with class modal, which is set to visible in CSS, so getElementsByClassName is needed (otherwise the modal remains hidden when the game has been won)
 let modal = document.getElementsByClassName('modal')[0];
 let openedCards = [];
 let second = 0, minute = 0, hour = 0;
 let timer = document.querySelector('.timer');
 let interval;
+const restartButton = document.querySelector('.restart');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -36,12 +37,16 @@ function shuffle(array) {
 // Shuffles cards upon page load
 document.body.onload = startGame();
 
+// Calls startGame() function with user clicks restart icon
+restartButton.addEventListener('click', startGame);
+
 function startGame() {
   // Shuffles deck
   cards = shuffle(cards);
   // Removes any existing classes from each card
   for (let i = 0; i < cards.length; i++) {
     deck.innerHTML = '';
+    // Empty array literal is being used as a shortcut to expanded version, Array.prototype. getElementsByClassName method was used to create cards variable. Since getElementsByClassName returns an "array-like" like object rather than an array, Array.prototype/[] is needed it use array methods on element(s) selected with it.
     [].forEach.call(cards, function(item) {
       deck.appendChild(item);
     });
@@ -213,4 +218,4 @@ for (let i = 0; i < cards.length; i++) {
   card.addEventListener('click', congratulations);
 }
 
-// TODO: fix bug: if you make one move and hit restart, then click one card, a second card (without an icon on it) is flipped. 
+// TODO: fix bug: if you make one move and hit restart, then click one card, a second card (without an icon on it) is flipped.
