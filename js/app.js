@@ -177,7 +177,6 @@ function startTimer() {
 }
 
 // Congratulates player when all cards match and shows modal, moves, time and rating
-
 function congratulations() {
   if (matchingCard.length == 16) {
     // Window method that stops setInterval() Window method from executing "myTimer" function every 1 second
