@@ -10,7 +10,6 @@ let moves = 0;
 let counter = document.querySelector('.moves');
 // Const cannot be used here in order for star rating to be reset when startGame() is called
 let stars = document.querySelectorAll('.fa-star');
-let starsList = document.querySelectorAll('.stars li');
 let matchingCard = document.getElementsByClassName('matching');
 let closeIcon = document.querySelector('.close');
 // Using getElementsByClassName instead of querySelector here (there's only one class to select) because querySelector is non-live, i.e., it doesn't reflect DOM manipulation. When the user wins the game, a class ("show") is added to the element with class modal, which is set to visible in CSS, so getElementsByClassName is needed (otherwise the modal remains hidden when the game has been won)
