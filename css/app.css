@@ -20,12 +20,13 @@ body {
 }
 
 body {
-  /* Background (Geometry 2) from Subtle Patterns */
-  background: url(../img/geometry2.png);
-  /* For CodePen */
-  /* background: url("https://image.ibb.co/i3hjVy/geometry2.png"); */
-	font-family: 'Coda', sans-serif;
-	font-size: 16px;
+  /* Background from Toptal's Subtle Patterns */
+  background: url(../img/dot-grid.png);
+	font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
@@ -35,11 +36,6 @@ body {
 	justify-content: center;
   /* Horizontally aligns content (under default conditions would control vertical alignment [still controls cross axis alignment, but cross axis is changed]) */
 	align-items: center;
-}
-
-h2 {
-  /* Reduce h2 top margin, remove default bottom margin (browser default is 0.83em) */
-  margin: 0.3em 0 0 0;
 }
 
 .left-span {
@@ -64,7 +60,7 @@ h2 {
   /* Vertical alignment */
 	align-items: center;
   /* Top, right/left, bottom */
-	margin: 0 0 3em;
+	margin: 0;
 }
 
 .card-deck .card {
